@@ -6,10 +6,16 @@ export (int) var gravity = 1200
 
 var velocity = Vector2()
 var jumping = false
+var landing = false
 
+#Para poder salvar a posição y
+#do frame anterior, assim eu
+#seto frame para true e false
+#onde no true salvo a posição y
+#e no false verifico a atual com a anterior
 var frame = true
 var yframe = 0
-var landing = false
+
 
 func _ready():
 	pass
@@ -49,7 +55,6 @@ func get_input(delta):
 			$AnimatedSprite.play()
 		
 
-
 func _physics_process(delta):
 	get_input(delta)
 	
@@ -64,6 +69,11 @@ func _physics_process(delta):
 		if position.y > yframe:
 			jumping = false
 			landing = true
+		#Se for igual, not jumping e not landing
+		if position.y == yframe:
+			jumping = false
+			landing = false
+
 	
 	if jumping and is_on_floor():
 		#Pulando
